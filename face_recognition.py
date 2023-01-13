@@ -10,6 +10,7 @@ from setuptools import Command
 import cv2
 #import tensorflow as tf
 from train import Train
+from student import Student
 
 
 class Face_Recognition:
@@ -51,6 +52,7 @@ class Face_Recognition:
         b1_1 = Button(self.root, text="Face Recogniton", command=self.face_recog, cursor="hand2", font = ("cursive", 18, "italic"),bg ='#011f4b', fg = '#f8ae97')
         b1_1.place(x=10, y= 160, width = 200, height=50)
 
+
     #==========Face Recognition Function=========
     def face_recog(self):
         
@@ -64,24 +66,29 @@ class Face_Recognition:
             for (x,y,w,h) in features:
                 cv2.rectangle(img, (x,y), (x+w, y+h), (0, 255, 0), 3)
                 id, predict = clf.predict(gray_image[y:y+h, x:x+w])
+                #id, predict = clf.predict(gray_image[int(y):int(y+h), int(x):int(x+w)])
+                #id = str(id)
+
                 confidence = int((100*(1-predict/300)))
 
-                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                 my_cursor = conn.cursor()
 
-                my_cursor.execute("select Student_Name from student where Enroll_No="+str(id))
+                my_cursor.execute("SELECT Student_Name FROM student where Student_Id="+str(id))
+                
                 n = my_cursor.fetchone()
-                n=str(n)
+               
                 n="+".join(n)
 
-                my_cursor.execute("select Enroll_No from student where Enroll_No="+str(id))
+                my_cursor.execute("SELECT Enroll_No FROM student where Student_Id="+str(id)) 
                 e = my_cursor.fetchone()
-                e=str(e)
+               
                 e="+".join(e)
 
-                my_cursor.execute("select Dep from student where Enroll_No="+str(id))
+                my_cursor.execute("SELECT Dep FROM student where Student_Id="+str(id))
+               
                 d = my_cursor.fetchone()
-                d=str(d)
+                
                 d="+".join(d)
 
    
@@ -94,18 +101,21 @@ class Face_Recognition:
                 else:
                     cv2.rectangle(img, (x,y), (x+w, y+h), (0, 0, 255), 3)
                
-                    cv2.putText(img, "Unknown Face ", (x, y-5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
+                    cv2.putText(img, "Unknown_Face ", (x, y-5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
 
-                coord[x,y,w,y] #h
-            
+                #coord[x,y,w,h] #h
+                coord.append((x,y,w,h))
+                conn.close()
+
             return coord
 
         def recognize(img, clf, faceCascade):
-            coord = draw_boundary(img, faceCascade, 1.1, 10, (255, 25, 255), "Face", clf)  #draw_boundary(img, faceCascade, 1.1, 10, (255, 25, 255), "Face", clf)
+            coord = draw_boundary(img, faceCascade, 1.1, 10, (255, 25, 255), "Face", clf)  
             return img
 
 
         faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
         clf = cv2.face.LBPHFaceRecognizer_create()
         clf.read("classifier.xml")
 
