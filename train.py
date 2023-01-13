@@ -61,7 +61,8 @@ class Train:
         for image in path:
             img = Image.open(image).convert('L')        #Converted in to Gray Scale Image
             imageNp = np.array(img, 'uint8')
-            id = int(os.path.split(image)[1].split('.')[1])   #To have face unique ids --Grid Scale converteds
+            id = int(os.path.split(image)[1].split('.')[1]) # 1 #To have face unique ids --Grid Scale converteds
+            #id = int(os.path.split(image)[1].split('.')[1])
 
             faces.append(imageNp)
             ids.append(id)
