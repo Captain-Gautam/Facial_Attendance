@@ -33,6 +33,7 @@ class Student :
         self.var_BatchYear = StringVar()
         self.var_Year = StringVar()
         self.var_Sem = StringVar()
+        self.va_std_id = StringVar()
         self.var_EnrollNo = StringVar()
         self.var_Name = StringVar()
         self.var_Div = StringVar()
@@ -132,6 +133,14 @@ class Student :
         Class_Student_frame = LabelFrame(Left_frame, bd=3, bg="white", relief=RIDGE, text="Class Student Information",  font = ("cursive", 12, "bold"))
         Class_Student_frame.place(x=5, y=120, width=638, height=370)
 
+        #Student ID
+        studentId_label = Label(Class_Student_frame, text="Student ID:", font = ("cursive", 11), bg ="white")
+        studentId_label.grid(row=4, column=0, padx=10, pady=10, sticky=W)
+
+        studentid_entry = ttk.Entry(Class_Student_frame, width=20, textvariable=self.va_std_id, font = ("cursive", 10, "bold"))
+        studentid_entry.grid(row=4, column=1, padx=10, sticky=W)
+
+        
         #Enrollment Number
         Enrollment_No_label = Label(Class_Student_frame, text="Enrollment No:", font = ("cursive", 11), bg ="white")
         Enrollment_No_label.grid(row=0, column=0, padx=10, pady=10, sticky=W)
@@ -203,12 +212,12 @@ class Student :
         #Radio Button For Taking Photos or not.
         self.var_radio1 = StringVar()
         radiobutton1 = Radiobutton(Class_Student_frame, variable=self.var_radio1, text="Take Photo Sample", value="NO")
-        radiobutton1.grid(row=4, column=0, padx=10, pady=10)
+        radiobutton1.grid(row=5, column=0, padx=5, pady=5)
 
         #Radio Button For Taking Photos or not.
         #self.var_radio2 = StringVar()
         radiobutton2 = Radiobutton(Class_Student_frame, variable=self.var_radio1, text="No Photo Sample", value="Yes")
-        radiobutton2.grid(row=4, column=2, padx=10, pady=10)
+        radiobutton2.grid(row=5, column=2, padx=5, pady=5)
 
 
         #Button Frame 
@@ -237,12 +246,12 @@ class Student :
 
 
         #Take Photo Sample Button
-        take_photo_sample_btn =Button(btn_frame1, command=self.generate_dataset, text="Take Photo Sample",  width=25, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
+        take_photo_sample_btn =Button(btn_frame1, command=self.generate_dataset, text="Take Photo Sample",  width=30, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
         take_photo_sample_btn.grid(row=1, column=0)
 
 
         #Update Photo Sample Button
-        update_photo_sample_btn =Button(btn_frame1, text="Update Photo Sample", width=25, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
+        update_photo_sample_btn =Button(btn_frame1, text="Update Photo Sample", width=32, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
         update_photo_sample_btn.grid(row=1, column=1)
 
 
@@ -291,7 +300,7 @@ class Student :
         scroll_x = ttk.Scrollbar(Table_frame, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(Table_frame, orient=VERTICAL)
         
-        self.student_tabel = ttk.Treeview(Table_frame, column=("Dep", "BatchYear", "Year", "Sem", "EnrollNo", "Name", "Div", "Gender", "DOB", "Email", "Phone", "Address", "PhotoSample" ), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set )
+        self.student_tabel = ttk.Treeview(Table_frame, column=("Dep", "BatchYear", "Year", "Sem", "Student_Id","EnrollNo", "Name", "Div", "Gender", "DOB", "Email", "Phone", "Address", "PhotoSample" ), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set )
 
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -304,6 +313,7 @@ class Student :
         self.student_tabel.heading("BatchYear", text="Batch-Year")
         self.student_tabel.heading("Year", text="Year")
         self.student_tabel.heading("Sem", text="Semester")
+        self.student_tabel.heading("Student_Id", text="Student_ID")
         self.student_tabel.heading("EnrollNo", text="Enrollment No")
         self.student_tabel.heading("Name", text="Name")
         self.student_tabel.heading("Div", text="Division")
@@ -320,6 +330,7 @@ class Student :
         self.student_tabel.column("BatchYear", width=100)
         self.student_tabel.column("Year", width=100)
         self.student_tabel.column("Sem", width=100)
+        self.student_tabel.column("Student_Id", width=100)
         self.student_tabel.column("EnrollNo", width=150)
         self.student_tabel.column("Name", width=100)
         self.student_tabel.column("Div", width=100)
@@ -342,19 +353,20 @@ class Student :
 
    
     def add_data(self):
-        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" :
+        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" or self.va_std_id == "":
             messagebox.showerror("Error", "All Fields are required", parent = self.root)
         
         else:
             try:
-                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                 my_cursor = conn.cursor()
-                my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s)", (
+                my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s)", (
 
                                                                                                             self.var_Dep.get(), 
                                                                                                             self.var_BatchYear.get(),
                                                                                                             self.var_Year.get(),
                                                                                                             self.var_Sem.get(),
+                                                                                                            self.va_std_id.get(),
                                                                                                             self.var_EnrollNo.get(),
                                                                                                             self.var_Name.get(),
                                                                                                             self.var_Div.get(),
@@ -377,7 +389,7 @@ class Student :
 
     #=============To Fetch Data===========
     def fetch_data(self):
-        conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+        conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
         my_cursor = conn.cursor()
         my_cursor.execute("select * from student")
         data = my_cursor.fetchall()
@@ -386,7 +398,7 @@ class Student :
             self.student_tabel.delete(*self.student_tabel.get_children())
             for i in data:
                 self.student_tabel.insert("", END, values=i)
-            conn.commit()
+            conn.commit()   
         conn.close()
 
     #====Get Cursor======
@@ -399,29 +411,30 @@ class Student :
         self.var_BatchYear.set(data[1]),
         self.var_Year.set(data[2]),
         self.var_Sem.set(data[3]),
-        self.var_EnrollNo.set(data[4]),
-        self.var_Name.set(data[5]),
-        self.var_Div.set(data[6]),
-        self.var_Gender.set(data[7]),
-        self.var_DOB.set(data[8])
-        self.var_Email.set(data[9]),
-        self.var_Phone.set(data[10]),
-        self.var_Address.set(data[11]),
-        self.var_PhotoSample.set(data[12]),
+        self.va_std_id.set(data[4]),
+        self.var_EnrollNo.set(data[5]),
+        self.var_Name.set(data[6]),
+        self.var_Div.set(data[7]),
+        self.var_Gender.set(data[8]),
+        self.var_DOB.set(data[9])
+        self.var_Email.set(data[10]),
+        self.var_Phone.set(data[11]),
+        self.var_Address.set(data[12]),
+        self.var_PhotoSample.set(data[13]),
         #self.var_radio1.set(data[13])
     
     #=====Update Function=======
     def update_data(self):
-        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" :
+        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" or self.va_std_id == "":
             messagebox.showerror("Error", "All Fields are required", parent = self.root)
 
         else:
             try:
                 Update = messagebox.askyesno("Update", "Do you want to update this student details?", parent = self.root)
                 if Update>0:
-                    conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+                    conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                     my_cursor = conn.cursor()
-                    my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Enroll_No=%s",(
+                    my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Student_Id=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
 
 
                                                                                                                                                                                                                          self.var_Dep.get(), 
@@ -429,6 +442,7 @@ class Student :
                                                                                                                                                                                                                          self.var_Year.get(),
                                                                                                                                                                                                                          
                                                                                                                                                                                                                          self.var_Sem.get(),
+                                                                                                                                                                                                                         self.va_std_id.get(),
                                                                                                                                                                                                                          self.var_EnrollNo.get(),
                                                                                                                                                                                                                          self.var_Name.get(),
                                                                                                                                                                                                                          self.var_Div.get(),
@@ -439,7 +453,7 @@ class Student :
                                                                                                                                                                                                                          self.var_Address.get(),
                                                                                                                                                                                                                          self.var_PhotoSample.get(),
                                                                                                                                                                                                                          #self.var_radio1()
-                                                                                                                                                                                                                         self.var_EnrollNo.get()
+                                                                                                                                                                                                                         self.va_std_id.get()
                                                                                                                                                                                                                          ))
                 else:
                     if  not Update:
@@ -457,16 +471,16 @@ class Student :
     #=====Delete Function=======
     def delete_data(self):
         if self.var_EnrollNo.get() == "":
-            messagebox.showerror("Error", "Student Enrollment Number is required!!", parent=self.root )
+            messagebox.showerror("Error", "Student Student ID must be required!!", parent=self.root )
 
         else:
             try:
                 delete = messagebox.askyesno("Delete", "Do you want to delete this details?", parent=self.root)
                 if delete>0:
-                     conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+                     conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                      my_cursor = conn.cursor()
-                     sql = "delete from student where Enroll_No = %s"
-                     val = (self.var_EnrollNo.get(),)
+                     sql = "delete from student where Student_Id = %s"
+                     val = (self.va_std_id.get(),)
                      my_cursor.execute(sql, val)
 
                 else:
@@ -490,6 +504,7 @@ class Student :
         self.var_BatchYear.set("Select Batch-Year")
         self.var_Year.set("Select Year")
         self.var_Sem.set("Select Semester")
+        self.va_std_id.set("")
         self.var_EnrollNo.set("")
         self.var_Name.set("")
         self.var_Div.set("Select Division")
@@ -503,20 +518,20 @@ class Student :
 
     #===========Generate Data Set Or Take Photo Sample===============
     def generate_dataset(self):
-        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" :
+        if self.var_Dep.get()=="Select Department" or self.var_Name.get()=="" or self.var_EnrollNo == "" or self.va_std_id == "" :
             messagebox.showerror("Error", "All Fields are required", parent = self.root)
 
         else:
             try:
                
-                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer")
+                conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                 my_cursor = conn.cursor()
                 my_cursor.execute("select * from student")
                 myresult = my_cursor.fetchall()
                 id=0
                 for x in myresult:
                     id+=1
-                my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Enroll_No=%s",(
+                my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Student_Id=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
 
 
                                                                                                                                                                                                                          self.var_Dep.get(), 
@@ -524,6 +539,7 @@ class Student :
                                                                                                                                                                                                                          self.var_Year.get(),
                                                                                                                                                                                                                          
                                                                                                                                                                                                                          self.var_Sem.get(),
+                                                                                                                                                                                                                         self.va_std_id.get(),
                                                                                                                                                                                                                          self.var_EnrollNo.get(),
                                                                                                                                                                                                                          self.var_Name.get(),
                                                                                                                                                                                                                          self.var_Div.get(),
@@ -534,7 +550,7 @@ class Student :
                                                                                                                                                                                                                          self.var_Address.get(),
                                                                                                                                                                                                                          self.var_PhotoSample.get(),
                                                                                                                                                                                                                          #self.var_radio1()
-                                                                                                                                                                                                                         self.var_EnrollNo.get()==id+1
+                                                                                                                                                                                                                         self.va_std_id.get()==id+1
                                                                                                                                                                                                                          ))
                 conn.commit()
                 self.fetch_data()
