@@ -4,14 +4,18 @@ from logging import root
 from tkinter import*
 from tkinter import ttk
 from tkinter import Tk
+import tkinter
+from tkinter import messagebox
 from tkinter import font
-from turtle import heading, width
-#from typing_extensions import self
+from datetime import datetime
+from time import strftime
 from PIL import Image, ImageTk
+import subprocess, sys
 import os
-#from student import Student
-#from train import Train
-#from face_recognition import Face_Recognition
+from student import Student
+from train import Train
+from face_recognition import Face_Recognition
+from attendance import Attendance
 
 
 class Face_Recognition_System :
@@ -47,6 +51,17 @@ class Face_Recognition_System :
         #Title Of Project
         title_lable1 = Label(bg_img, text = "FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE", font = ("cursive", 22, "italic"),bg ='#011f4b', fg = '#f8ae97') #We can give bg also.
         title_lable1.place(x=0, y=0, width = 1360, height = 45)
+        
+       
+        #===========Time==============
+        def time():
+            string = strftime('%H:%M:%S %p')
+            lbl.config(text = string)
+            lbl.after(1000, time)
+            
+        lbl = Label(self.root, font = ("comicsansns", 16, "italic"),bg ='#011f4b', fg = '#f8ae97')
+        lbl.place(x=2, y=148, width=150, height=50)
+        time()
 
         
         #Student Button
@@ -85,11 +100,11 @@ class Face_Recognition_System :
         self.photoimg5 = ImageTk.PhotoImage(img5)
 
 
-        b3 = Button(bg_img, image = self.photoimg5, cursor="hand2")
+        b3 = Button(bg_img, image = self.photoimg5, cursor="hand2", command=self.attendace_data)
         b3.place(x=935, y= 100, width = 140, height=140)
 
 
-        b3_3 = Button(bg_img, text="Attendance", cursor="hand2", font = ("cursive", 14, "italic"),bg ='#011f4b', fg = '#f8ae97')
+        b3_3 = Button(bg_img, text="Attendance", cursor="hand2", command=self.attendace_data, font = ("cursive", 14, "italic"),bg ='#011f4b', fg = '#f8ae97')
         b3_3.place(x=935, y= 240, width = 140, height=30)
 
 
@@ -124,22 +139,33 @@ class Face_Recognition_System :
 
 
 
-         #Exit Button
+        #Exit Button
         img8 = Image.open(r"bg_images/Exit1.jpg")
         img8 = img8.resize((140,140),Image.ANTIALIAS)
         self.photoimg8 = ImageTk.PhotoImage(img8)
 
 
-        b6 = Button(bg_img, image = self.photoimg8, cursor="hand2")
+        b6 = Button(bg_img, image = self.photoimg8, cursor="hand2", command=self.exit)
         b6.place(x=935, y= 350, width = 140, height=140)
 
 
-        b6_6 = Button(bg_img, text="Exit", cursor="hand2", font = ("cursive", 14, "italic"),bg ='#011f4b', fg = '#f8ae97')
+        b6_6 = Button(bg_img, text="Exit", cursor="hand2", command=self.exit, font = ("cursive", 14, "italic"),bg ='#011f4b', fg = '#f8ae97')
         b6_6.place(x=935, y= 490, width = 140, height=30)
 
-
+    #=====To open the Photo Data button==========
     def open_img(self):
-        os.startfile("data")
+        
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, "data"])
+        #os.startfile("data")   #startfile
+        
+    #======Exit Menu===========
+    def exit(self):
+        self.exit = tkinter.messagebox.askyesno("Exit", "Are sure you want to Exit?", parent=self.root)
+        if self.exit > 0:
+            self.root.destroy()
+        else:
+            return
 
     #========Function Buttons=========
  
@@ -155,6 +181,10 @@ class Face_Recognition_System :
     def face_recogniton(self):
         self.new_window = Toplevel(self.root)
         self.app = Face_Recognition(self.new_window)
+        
+    def attendace_data(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Attendance(self.new_window)
 
 
 
@@ -167,5 +197,5 @@ if __name__ == "__main__":
     root.mainloop()
 
 
-#Download necessory
+# Download necessory
 #python. pip, pillow, opencv, dlib, numpy, face-recogniton, mysql-connector
