@@ -79,7 +79,7 @@ class Student :
         
         #Frame
         main_frame = Frame(bg_img, bd=2, bg = "white")
-        main_frame.place(x=10, y=50, width=1335, height=525)
+        main_frame.place(x=10, y=50, width=1340, height=525)
 
 
         #Left Label Frame
