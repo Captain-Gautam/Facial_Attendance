@@ -1,7 +1,7 @@
 from ast import Delete
 from base64 import b64decode
 from cgitb import text
-import imp
+import os
 from logging import exception, root
 from os import stat
 from tkinter import*
@@ -11,13 +11,15 @@ from tkinter import font
 from tkinter.tix import INTEGER
 from tokenize import String
 from turtle import heading, update, width
+from tkcalendar import  DateEntry
+from tkinter import filedialog
 #from typing_extensions import self
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
 from setuptools import Command
 import cv2
-
+import csv
 
 
 class Student :
@@ -45,7 +47,7 @@ class Student :
         self.var_PhotoSample = StringVar()
         self.var_search = StringVar()
         self.var_search_combo = StringVar()
-        #self.var_radio1 = StringVar()
+        self.var_radio1 = StringVar()
 
 
 
@@ -81,7 +83,7 @@ class Student :
         
         #Frame
         main_frame = Frame(bg_img, bd=2, bg = "white")
-        main_frame.place(x=10, y=50, width=1340, height=525)
+        main_frame.place(x=10, y=50, width=1340, height=545)
 
 
         #Left Label Frame
@@ -141,6 +143,10 @@ class Student :
 
         studentid_entry = ttk.Entry(Class_Student_frame, width=16, textvariable=self.va_std_id, font = ("comicsansns", 10, "bold"))
         studentid_entry.grid(row=0, column=1, padx=0, sticky=W)
+        
+        # #Export Detail
+        # export_btn =Button(Class_Student_frame, text="Export Details", command=self.export_data,  width=12, height=1, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        # export_btn.grid(row=0, column=2, padx=0, pady=1)
 
         
         #Enrollment Number
@@ -183,7 +189,7 @@ class Student :
         DOB_label = Label(Class_Student_frame, text="DOB:", font = ("comicsansns", 11), bg ="white")
         DOB_label.grid(row=3, column=0, padx=5, pady=10, sticky=W)
 
-        dob_name = ttk.Entry(Class_Student_frame, width=16, textvariable=self.var_DOB, font = ("comicsansns", 10, "bold"))
+        dob_name = DateEntry(Class_Student_frame, width=15, textvariable=self.var_DOB, font = ("comicsansns", 10, "bold"), date_pattern='dd/mm/yyyy')
         dob_name.grid(row=3, column=1, padx=0, sticky=W)
 
         
@@ -212,13 +218,13 @@ class Student :
 
 
         #Radio Button For Taking Photos or not.
-        self.var_radio1 = StringVar()
-        radiobutton1 = Radiobutton(Class_Student_frame, variable=self.var_radio1, text="Take Photo Sample", value="NO")
+        self.var_PhotoSample = StringVar()
+        radiobutton1 = Radiobutton(Class_Student_frame, variable=self.var_PhotoSample, text="Take Photo Sample", value="Yes")
         radiobutton1.grid(row=5, column=0, padx=5, pady=5)
 
         #Radio Button For Taking Photos or not.
         #self.var_radio2 = StringVar()
-        radiobutton2 = Radiobutton(Class_Student_frame, variable=self.var_radio1, text="No Photo Sample", value="Yes")
+        radiobutton2 = Radiobutton(Class_Student_frame, variable=self.var_PhotoSample, text="No Photo Sample", value="No")
         radiobutton2.grid(row=5, column=2, padx=5, pady=5)
 
 
@@ -252,8 +258,8 @@ class Student :
         take_photo_sample_btn.grid(row=1, column=0, pady=1)
 
 
-        #Update Photo Sample Button
-        update_photo_sample_btn =Button(btn_frame1, text="Update Photo Sample", width=21, height=2, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        #Update Photo Sample Button ///// Export Detail
+        update_photo_sample_btn =Button(btn_frame1, text="Export Detail", command=self.export_data, width=21, height=2, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
         update_photo_sample_btn.grid(row=1, column=1, padx=2)
 
 
@@ -278,7 +284,7 @@ class Student :
 
 
         search_combo = ttk.Combobox(Search_frame, textvariable=self.var_search_combo, font = ("comicsansns", 10, "bold"), width=14, state="readonly")
-        search_combo["values"] = ("Select", "Enrollment No", "Phone No", "Email") 
+        search_combo["values"] = ("Select", "Department", "Semester", "Student_ID", "Enrollment No", "Phone No", "Email") 
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=10, pady=10, sticky=W)
 
@@ -363,7 +369,13 @@ class Student :
         search_value = self.var_search.get()
 
     # Execute the appropriate SQL query based on the user's search criteria
-        if search_by == "Enrollment No":
+        if search_by == "Department":
+            query = "SELECT * FROM student WHERE dep = %s"
+        elif search_by == "Semester":
+            query = "SELECT * FROM student WHERE semester = %s"
+        elif search_by == "Student_ID":
+            query = "SELECT * FROM student WHERE student_id = %s"
+        elif search_by == "Enrollment No":
             query = "SELECT * FROM student WHERE enroll_no = %s"
         elif search_by == "Phone No":
             query = "SELECT * FROM student WHERE phone_no = %s"
@@ -553,6 +565,36 @@ class Student :
         self.var_Phone.set("")
         self.var_Address.set("")
         self.var_PhotoSample.set("")
+        
+    #========Emport Details CSV=================
+    
+    def fetch_data_1(self):
+        try:
+            connection = mysql.connector.connect(host='localhost', user='root', password='gautam', database='face_recognizer_1')
+            cursor = connection.cursor()
+            query = "SELECT * FROM student"
+            cursor.execute(query)
+            students = cursor.fetchall()
+            connection.close()
+            return students
+        except Exception as e:
+            messagebox.showerror("Error", f"Due To : {str(e)}", parent=self.root)
+   
+    def export_data(self):
+        try:
+            filename = filedialog.asksaveasfilename(initialdir=os.getcwd(), title="Save CSV",
+                                                    filetypes=[("CSV Files", "*.csv")], defaultextension='.csv')
+            if filename:
+                with open(filename, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['Student_Id', 'EnrollNo', 'Name', 'Sem',  'Dep', 'BatchYear', 'Year',   'Div', 'Gender', 'DOB', 'Email', 'Phone', 'Address', 'PhotoSample'])
+                    students = self.fetch_data_1()
+                    #print(students)
+                    for student in students:
+                        writer.writerow(student)
+            messagebox.showinfo("Success", "Successfully exported student details", parent=self.root)
+        except Exception as e:
+            messagebox.showerror("Error", f"Due To : {str(e)}", parent=self.root)
 
 
     #===========Generate Data Set Or Take Photo Sample===============
