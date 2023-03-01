@@ -43,12 +43,14 @@ class Student :
         self.var_Phone = StringVar()
         self.var_Address = StringVar()
         self.var_PhotoSample = StringVar()
+        self.var_search = StringVar()
+        self.var_search_combo = StringVar()
         #self.var_radio1 = StringVar()
 
 
 
         #Logo
-        img = Image.open(r"bg_images/topic.png")
+        img = Image.open(r"bg_images/topic_1.png")
         img = img.resize((1360,100),Image.ANTIALIAS)
         self.photoimg = ImageTk.PhotoImage(img)
 
@@ -73,7 +75,7 @@ class Student :
 
         
         #Title Of Project
-        title_lable1 = Label(bg_img, text = "STUDENT MANAGEMENT SYSTEM", font = ("cursive", 22, "italic"), bg ='#011f4b', fg = '#f8ae97') #We can give bg and fg
+        title_lable1 = Label(bg_img, text = "STUDENT MANAGEMENT SYSTEM", font = ("comicsansns", 22, "italic"), bg ='#011f4b', fg = '#f8ae97') #We can give bg and fg
         title_lable1.place(x=0, y=0, width = 1360, height = 45)
 
         
@@ -83,130 +85,130 @@ class Student :
 
 
         #Left Label Frame
-        Left_frame = LabelFrame(main_frame, bd=3, bg="white", relief=RIDGE, text="Student Details",  font = ("cursive", 14, "bold"))
+        Left_frame = LabelFrame(main_frame, bd=3, bg="white", relief=RIDGE, text="Student Details",  font = ("comicsansns", 14, "bold"))
         Left_frame.place(x=5, y=5, width=655, height= 515)
 
        
         #Current Course Information
-        Current_Course_frame = LabelFrame(Left_frame, bd=3, bg="white", relief=RIDGE, text="Current Course Information",  font = ("cursive", 12, "bold"))
+        Current_Course_frame = LabelFrame(Left_frame, bd=3, bg="white", relief=RIDGE, text="Current Course Information",  font = ("comicsansns", 12, "bold"))
         Current_Course_frame.place(x=5, y=5, width=638, height= 115)
 
         #Department
-        dep_label = Label(Current_Course_frame, text="Department", font = ("cursive", 11), bg ="white")
+        dep_label = Label(Current_Course_frame, text="Department", font = ("comicsansns", 11), bg ="white")
         dep_label.grid(row=0, column=0, padx=10)
 
-        dep_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Dep, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        dep_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Dep, font = ("comicsansns", 10, "bold"), width=17, state="readonly")
         dep_combo["values"] = ("Select Department", "Computer Engg.", "IT", "Civil", "Mechanical")
         dep_combo.current(0)
         dep_combo.grid(row=0, column=1, padx=2, pady=10, sticky=W)
 
         #Batch-Year 
-        Batch_Year_label = Label(Current_Course_frame, text="Batch-Year", font = ("cursive", 11), bg ="white")
+        Batch_Year_label = Label(Current_Course_frame, text="Batch-Year", font = ("comicsansns", 11), bg ="white")
         Batch_Year_label.grid(row=0, column=2, padx=10, sticky=W)
 
-        batch_year_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_BatchYear, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        batch_year_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_BatchYear, font = ("comicsansns", 10, "bold"), width=17, state="readonly")
         batch_year_combo["values"] = ("Select Batch-Year", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026")
         batch_year_combo.current(0)
         batch_year_combo.grid(row=0, column=3, padx=2, pady=10, sticky=W)
 
         #Year
-        year_label = Label(Current_Course_frame, text="Year", font = ("cursive", 11), bg ="white")
+        year_label = Label(Current_Course_frame, text="Year", font = ("comicsansns", 11), bg ="white")
         year_label.grid(row=1, column=0, padx=10, sticky=W)
 
-        year_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Year, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        year_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Year, font = ("comicsansns", 10, "bold"), width=17, state="readonly")
         year_combo["values"] = ("Select Year","2022-23","2023-24", "2024-25","2025-26") 
         year_combo.current(0)
         year_combo.grid(row=1, column=1, padx=2, pady=5, sticky=W)
 
 
         #Semester
-        semester_label = Label(Current_Course_frame, text="Semester", font = ("cursive", 11), bg ="white")
+        semester_label = Label(Current_Course_frame, text="Semester", font = ("comicsansns", 11), bg ="white")
         semester_label.grid(row=1, column=2, padx=10, sticky=W)
 
-        semester_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Sem, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        semester_combo = ttk.Combobox(Current_Course_frame, textvariable=self.var_Sem, font = ("comicsansns", 10, "bold"), width=17, state="readonly")
         semester_combo["values"] = ("Select Semester","Semester-1","Semester-2","Semester-3", "Semester-4", "Semester-5", "Semester-6", "Semester-7", "Semester-8") 
         semester_combo.current(0)
         semester_combo.grid(row=1, column=3, padx=2, pady=10, sticky=W)
 
 
         #Class_Student Information
-        Class_Student_frame = LabelFrame(Left_frame, bd=3, bg="white", relief=RIDGE, text="Class Student Information",  font = ("cursive", 12, "bold"))
+        Class_Student_frame = LabelFrame(Left_frame, bd=3, bg="white", relief=RIDGE, text="Class Student Information",  font = ("comicsansns", 12, "bold"))
         Class_Student_frame.place(x=5, y=120, width=638, height=370)
 
         #Student ID
-        studentId_label = Label(Class_Student_frame, text="Student ID:", font = ("cursive", 11), bg ="white")
-        studentId_label.grid(row=4, column=0, padx=10, pady=10, sticky=W)
+        studentId_label = Label(Class_Student_frame, text="Student ID:", font = ("comicsansns", 11), bg ="white")
+        studentId_label.grid(row=0, column=0, padx=5, pady=10, sticky=W)
 
-        studentid_entry = ttk.Entry(Class_Student_frame, width=20, textvariable=self.va_std_id, font = ("cursive", 10, "bold"))
-        studentid_entry.grid(row=4, column=1, padx=10, sticky=W)
+        studentid_entry = ttk.Entry(Class_Student_frame, width=16, textvariable=self.va_std_id, font = ("comicsansns", 10, "bold"))
+        studentid_entry.grid(row=0, column=1, padx=0, sticky=W)
 
         
         #Enrollment Number
-        Enrollment_No_label = Label(Class_Student_frame, text="Enrollment No:", font = ("cursive", 11), bg ="white")
-        Enrollment_No_label.grid(row=0, column=0, padx=10, pady=10, sticky=W)
+        Enrollment_No_label = Label(Class_Student_frame, text="Enrollment No:", font = ("comicsansns", 11), bg ="white")
+        Enrollment_No_label.grid(row=1, column=0, padx=5, pady=10, sticky=W)
 
-        enrollmentid = ttk.Entry(Class_Student_frame, width=20, textvariable=self.var_EnrollNo, font = ("cursive", 10, "bold"))
-        enrollmentid.grid(row=0, column=1, padx=10, sticky=W)
+        enrollmentid = ttk.Entry(Class_Student_frame, width=16, textvariable=self.var_EnrollNo, font = ("comicsansns", 10, "bold"))
+        enrollmentid.grid(row=1, column=1, padx=0, sticky=W)
 
         
         #Student_Name
-        Student_Name_label = Label(Class_Student_frame, text="Student Name:", font = ("cursive", 11), bg ="white")
-        Student_Name_label.grid(row=0, column=2, padx=10, pady=10, sticky=W)
+        Student_Name_label = Label(Class_Student_frame, text="Student Name:", font = ("comicsansns", 11), bg ="white")
+        Student_Name_label.grid(row=1, column=2, padx=5, pady=10, sticky=W)
 
-        student_name = ttk.Entry(Class_Student_frame, width=20, textvariable=self.var_Name, font = ("cursive", 10, "bold"))
-        student_name.grid(row=0, column=3, padx=10, sticky=W)
+        student_name = ttk.Entry(Class_Student_frame, width=16, textvariable=self.var_Name, font = ("comicsansns", 10, "bold"))
+        student_name.grid(row=1, column=3, padx=0, sticky=W)
 
         
         
         #Division_Name
-        Division_label = Label(Class_Student_frame, text="Division:", font = ("cursive", 11), bg ="white")
-        Division_label.grid(row=1, column=0, padx=10, sticky=W)
+        Division_label = Label(Class_Student_frame, text="Division:", font = ("comicsansns", 11), bg ="white")
+        Division_label.grid(row=2, column=0, padx=5, sticky=W)
 
-        division_combo = ttk.Combobox(Class_Student_frame, textvariable=self.var_Div, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        division_combo = ttk.Combobox(Class_Student_frame, textvariable=self.var_Div, font = ("comicsansns", 10, "bold"), width=15, state="readonly")
         division_combo["values"] = ("Select Division","A", "B", "C", "D") 
         division_combo.current(0)
-        division_combo.grid(row=1, column=1, padx=10, pady=10, sticky=W)
+        division_combo.grid(row=2, column=1, padx=0, pady=10, sticky=W)
 
         #Gender
-        Gender_label = Label(Class_Student_frame, text="Gender:", font = ("cursive", 11), bg ="white")
-        Gender_label.grid(row=1, column=2, padx=10, sticky=W)
+        Gender_label = Label(Class_Student_frame, text="Gender:", font = ("comicsansns", 11), bg ="white")
+        Gender_label.grid(row=2, column=2, padx=5, sticky=W)
 
-        gender_combo = ttk.Combobox(Class_Student_frame,textvariable=self.var_Gender, font = ("cursive", 10, "bold"), width=17, state="readonly")
+        gender_combo = ttk.Combobox(Class_Student_frame,textvariable=self.var_Gender, font = ("comicsansns", 10, "bold"), width=15, state="readonly")
         gender_combo["values"] = ("Select Gender","Male", "Female", "Others") 
         gender_combo.current(0)
-        gender_combo.grid(row=1, column=3, padx=10, pady=10, sticky=W)
+        gender_combo.grid(row=2, column=3, padx=0, pady=10, sticky=W)
 
 
         #DOB
-        DOB_label = Label(Class_Student_frame, text="DOB:", font = ("cursive", 11), bg ="white")
-        DOB_label.grid(row=2, column=0, padx=10, pady=10, sticky=W)
+        DOB_label = Label(Class_Student_frame, text="DOB:", font = ("comicsansns", 11), bg ="white")
+        DOB_label.grid(row=3, column=0, padx=5, pady=10, sticky=W)
 
-        dob_name = ttk.Entry(Class_Student_frame, width=20, textvariable=self.var_DOB, font = ("cursive", 10, "bold"))
-        dob_name.grid(row=2, column=1, padx=10, sticky=W)
+        dob_name = ttk.Entry(Class_Student_frame, width=16, textvariable=self.var_DOB, font = ("comicsansns", 10, "bold"))
+        dob_name.grid(row=3, column=1, padx=0, sticky=W)
 
         
         #Email 
-        Email_label = Label(Class_Student_frame, text="Email:", font = ("cursive", 11), bg ="white")
-        Email_label.grid(row=2, column=2, padx=10, pady=10, sticky=W)
+        Email_label = Label(Class_Student_frame, text="Email:", font = ("comicsansns", 11), bg ="white")
+        Email_label.grid(row=3, column=2, padx=5, pady=10, sticky=W)
 
-        email_name = ttk.Entry(Class_Student_frame, width=20,textvariable=self.var_Email, font = ("cursive", 10, "bold"))
-        email_name.grid(row=2, column=3, padx=10, sticky=W)
+        email_name = ttk.Entry(Class_Student_frame, width=16,textvariable=self.var_Email, font = ("comicsansns", 10, "bold"))
+        email_name.grid(row=3, column=3, padx=0, sticky=W)
 
 
         #Phone Nmber
-        Phoneno_label = Label(Class_Student_frame, text="Phone No:", font = ("cursive", 11), bg ="white")
-        Phoneno_label.grid(row=3, column=0, padx=10, pady=10, sticky=W)
+        Phoneno_label = Label(Class_Student_frame, text="Phone No:", font = ("comicsansns", 11), bg ="white")
+        Phoneno_label.grid(row=4, column=0, padx=5, pady=10, sticky=W)
 
-        phoneno_name = ttk.Entry(Class_Student_frame, width=20,textvariable=self.var_Phone, font = ("cursive", 10, "bold"))
-        phoneno_name.grid(row=3, column=1, padx=10, sticky=W)
+        phoneno_name = ttk.Entry(Class_Student_frame, width=16,textvariable=self.var_Phone, font = ("comicsansns", 10, "bold"))
+        phoneno_name.grid(row=4, column=1, padx=0, sticky=W)
 
 
         #Address
-        Address_label = Label(Class_Student_frame, text="Address:", font = ("cursive", 11), bg ="white")
-        Address_label.grid(row=3, column=2, padx=10, pady=4, sticky=W)
+        Address_label = Label(Class_Student_frame, text="Address:", font = ("comicsansns", 11), bg ="white")
+        Address_label.grid(row=4, column=2, padx=5, pady=4, sticky=W)
 
-        address_name = ttk.Entry(Class_Student_frame, width=20,textvariable=self.var_Address, font = ("cursive", 10, "bold"))
-        address_name.grid(row=3, column=3, padx=10, sticky=W)
+        address_name = ttk.Entry(Class_Student_frame, width=16,textvariable=self.var_Address, font = ("comicsansns", 10, "bold"))
+        address_name.grid(row=4, column=3, padx=0, sticky=W)
 
 
         #Radio Button For Taking Photos or not.
@@ -220,76 +222,77 @@ class Student :
         radiobutton2.grid(row=5, column=2, padx=5, pady=5)
 
 
-        #Button Frame 
+        #---------Button Frame----------------
         btn_frame = Frame(Class_Student_frame, bd=2, relief=RIDGE, bg="black")
-        btn_frame.place(x=5, y=220, width=620, height=120)
+        btn_frame.place(x=5, y=245, width=620, height=100)
 
         #Save Button
-        save_btn =Button(btn_frame, text="Save", command=self.add_data, width=11, height=1, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        save_btn.grid(row=0, column=0, padx=5, pady=10)
+        save_btn =Button(btn_frame, text="Save", command=self.add_data, width=9, height=1, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        save_btn.grid(row=0, column=0, padx=4, pady=1)
 
         #Update Button
-        update_btn =Button(btn_frame, text="Update", command=self.update_data, width=11, height=1, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        update_btn.grid(row=0, column=1, padx=5, pady=10)
+        update_btn =Button(btn_frame, text="Update", command=self.update_data, width=9, height=1, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        update_btn.grid(row=0, column=1, padx=4, pady=1)
 
         #Delete Button
-        delete_btn =Button(btn_frame, text="Delete", width=11, command=self.delete_data, height=1, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        delete_btn.grid(row=0, column=2, padx=5, pady=10)
+        delete_btn =Button(btn_frame, text="Delete", width=9, command=self.delete_data, height=1, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        delete_btn.grid(row=0, column=2, padx=4, pady=1)
 
         #Reset Button
-        reset_btn =Button(btn_frame, text="Reset", command=self.reset_data,  width=11, height=1, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        reset_btn.grid(row=0, column=3, padx=5, pady=10)
+        reset_btn =Button(btn_frame, text="Reset", command=self.reset_data,  width=9, height=1, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        reset_btn.grid(row=0, column=3, padx=4, pady=1)
 
         #Button_Photo Frame 
         btn_frame1 = Frame(btn_frame, bd=2, relief=RIDGE, bg="black")
-        btn_frame1.place(x=5, y=50, width=610, height=65)
+        btn_frame1.place(x=2, y=40, width=610, height=65)
 
 
         #Take Photo Sample Button
-        take_photo_sample_btn =Button(btn_frame1, command=self.generate_dataset, text="Take Photo Sample",  width=30, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        take_photo_sample_btn.grid(row=1, column=0)
+        take_photo_sample_btn =Button(btn_frame1, command=self.generate_dataset, text="Take Photo Sample",  width=21, height=2, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        take_photo_sample_btn.grid(row=1, column=0, pady=1)
 
 
         #Update Photo Sample Button
-        update_photo_sample_btn =Button(btn_frame1, text="Update Photo Sample", width=32, height=2, font = ("cursive", 14, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        update_photo_sample_btn.grid(row=1, column=1)
+        update_photo_sample_btn =Button(btn_frame1, text="Update Photo Sample", width=21, height=2, font = ("comicsansns", 14, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        update_photo_sample_btn.grid(row=1, column=1, padx=2)
 
 
 
 
 
         #Right Label Frame
-        Right_frame = LabelFrame(main_frame, bd=3, bg="white", relief=RIDGE, text="Student Details",  font = ("cursive", 14, "bold"))
+        Right_frame = LabelFrame(main_frame, bd=3, bg="white", relief=RIDGE, text="Student Details",  font = ("comicsansns", 14, "bold"))
         Right_frame.place(x=670, y=5, width=655, height= 515)
 
 
         #========Search System==========
 
         #View Student Detail And Search it.
-        Search_frame = LabelFrame(Right_frame, bd=3, bg="white", relief=RIDGE, text="Search System",  font = ("cursive", 11, "bold"))
+        Search_frame = LabelFrame(Right_frame, bd=3, bg="white", relief=RIDGE, text="Search System",  font = ("comicsansns", 11, "bold"))
         Search_frame.place(x=5, y=3, width=638, height=70)
 
 
         # Search Label
-        Search_label = Label(Search_frame, text="Search By:", font = ("cursive", 13), bg ="red", fg="white")
+        Search_label = Label(Search_frame, text="Search By:", font = ("comicsansns", 13), bg ="red", fg="white")
         Search_label.grid(row=0, column=0, padx=10, pady=4, sticky=W)
 
 
-        search_combo = ttk.Combobox(Search_frame, font = ("cursive", 10, "bold"), width=14, state="readonly")
-        search_combo["values"] = ("Select","Enrollment No", "Phone No", "Email") 
+        search_combo = ttk.Combobox(Search_frame, textvariable=self.var_search_combo, font = ("comicsansns", 10, "bold"), width=14, state="readonly")
+        search_combo["values"] = ("Select", "Enrollment No", "Phone No", "Email") 
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=10, pady=10, sticky=W)
 
-        Search_Entry = ttk.Entry(Search_frame, font = ("cursive", 13, "bold"))
+        Search_Entry = ttk.Entry(Search_frame, textvariable=self.var_search, font = ("comicsansns", 13, "bold"))
         Search_Entry.grid(row=0, column=2, padx=10, pady=4, sticky=W)
 
 
         #Search Button
-        Search_btn =Button(Search_frame, text="Search", width=7,  font = ("cursive", 10, "bold"),bg ='#011f4b', fg = '#f8ae97' )
-        Search_btn.grid(row=0, column=3, padx=10, pady=1)
+        Search_btn =Button(Search_frame, text="Search", width=6, command=self.search_student, font = ("comicsansns", 10, "bold"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97' )
+        Search_btn.grid(row=0, column=3, padx=0, pady=1)
+        
 
         #Show All Button
-        Show_All_btn =Button(Search_frame, text="Show All", width=7, font = ("cursive", 10, "bold"),bg ='#011f4b', fg = '#f8ae97' )
+        Show_All_btn =Button(Search_frame, text="Show All", width=7, font = ("comicsansns", 10, "bold"),bg ='#011f4b', fg = '#f8ae97' )
         Show_All_btn.grid(row=0, column=4, padx=10, pady=1)
 
         #Tabel Label Frame
@@ -300,7 +303,7 @@ class Student :
         scroll_x = ttk.Scrollbar(Table_frame, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(Table_frame, orient=VERTICAL)
         
-        self.student_tabel = ttk.Treeview(Table_frame, column=("Dep", "BatchYear", "Year", "Sem", "Student_Id","EnrollNo", "Name", "Div", "Gender", "DOB", "Email", "Phone", "Address", "PhotoSample" ), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set )
+        self.student_tabel = ttk.Treeview(Table_frame, column=("Student_Id", "EnrollNo", "Name", "Sem",  "Dep", "BatchYear", "Year",   "Div", "Gender", "DOB", "Email", "Phone", "Address", "PhotoSample" ), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set )
 
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -309,14 +312,14 @@ class Student :
 
 
         #Headings OF the Tabel Frame
+        self.student_tabel.heading("Student_Id", text="S_ID")
+        self.student_tabel.heading("EnrollNo", text="Enrollment No")
+        self.student_tabel.heading("Name", text="Name")
+        self.student_tabel.heading("Sem", text="Semester")
         self.student_tabel.heading("Dep", text="Department")
         self.student_tabel.heading("BatchYear", text="Batch-Year")
         self.student_tabel.heading("Year", text="Year")
-        self.student_tabel.heading("Sem", text="Semester")
-        self.student_tabel.heading("Student_Id", text="Student_ID")
-        self.student_tabel.heading("EnrollNo", text="Enrollment No")
-        self.student_tabel.heading("Name", text="Name")
-        self.student_tabel.heading("Div", text="Division")
+        self.student_tabel.heading("Div", text="Div")
         self.student_tabel.heading("Gender", text="Gender")
         self.student_tabel.heading("DOB", text="DOB")
         self.student_tabel.heading("Email", text="Email")
@@ -325,18 +328,18 @@ class Student :
         self.student_tabel.heading("PhotoSample", text="Photo Status")
         
         self.student_tabel["show"] = "headings"
-    
+        
+        self.student_tabel.column("Student_Id", width=40)
+        self.student_tabel.column("EnrollNo", width=120)
+        self.student_tabel.column("Name", width=150)
+        self.student_tabel.column("Sem", width=100)   
         self.student_tabel.column("Dep", width=100)
         self.student_tabel.column("BatchYear", width=100)
         self.student_tabel.column("Year", width=100)
-        self.student_tabel.column("Sem", width=100)
-        self.student_tabel.column("Student_Id", width=100)
-        self.student_tabel.column("EnrollNo", width=150)
-        self.student_tabel.column("Name", width=100)
-        self.student_tabel.column("Div", width=100)
+        self.student_tabel.column("Div", width=50)
         self.student_tabel.column("Gender", width=100)
         self.student_tabel.column("DOB", width=100)
-        self.student_tabel.column("Email", width=100)
+        self.student_tabel.column("Email", width=150)
         self.student_tabel.column("Phone", width=100)
         self.student_tabel.column("Address", width=100)
         self.student_tabel.column("PhotoSample", width=100)
@@ -347,8 +350,46 @@ class Student :
         self.fetch_data()
         #self.get_cursor()
 
+       # found_students = Student.search_student(search_combo, Search_Entry)
+
+    #================Search System=================
+    def search_student(self):
+        connection = mysql.connector.connect(host="localhost", user="root", password="gautam", database="face_recognizer_1")
+        cursor = connection.cursor()
 
         
+    # Get the user input from the search entry widget
+        search_by = self.var_search_combo.get()
+        search_value = self.var_search.get()
+
+    # Execute the appropriate SQL query based on the user's search criteria
+        if search_by == "Enrollment No":
+            query = "SELECT * FROM student WHERE enroll_no = %s"
+        elif search_by == "Phone No":
+            query = "SELECT * FROM student WHERE phone_no = %s"
+        elif search_by == "Email":
+            query = "SELECT * FROM student WHERE email = %s"
+        else:
+            messagebox.showerror("Error", "Please select a search criteria")
+            return
+    
+    
+    # Execute the query and fetch the results
+        cursor.execute(query, (search_value,))
+        rows = cursor.fetchall()
+
+    # Clear the table before displaying search results
+        for row in self.student_tabel.get_children():
+           self.student_tabel.delete(row)
+
+    # Display the search results in the table
+        for row in rows:
+            self.student_tabel.insert("", END, values=row)
+
+
+        connection.commit()
+        connection.close()
+  
     #================Function Declaration============
 
    
@@ -361,14 +402,14 @@ class Student :
                 conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s)", (
-
-                                                                                                            self.var_Dep.get(), 
-                                                                                                            self.var_BatchYear.get(),
-                                                                                                            self.var_Year.get(),
-                                                                                                            self.var_Sem.get(),
+                    
                                                                                                             self.va_std_id.get(),
                                                                                                             self.var_EnrollNo.get(),
                                                                                                             self.var_Name.get(),
+                                                                                                            self.var_Sem.get(),
+                                                                                                            self.var_Dep.get(), 
+                                                                                                            self.var_BatchYear.get(),
+                                                                                                            self.var_Year.get(),
                                                                                                             self.var_Div.get(),
                                                                                                             self.var_Gender.get(),
                                                                                                             self.var_DOB.get(),
@@ -407,13 +448,13 @@ class Student :
         content = self.student_tabel.item(cursor_focus)
         data = content["values"]
 
-        self.var_Dep.set(data[0]),
-        self.var_BatchYear.set(data[1]),
-        self.var_Year.set(data[2]),
+        self.va_std_id.set(data[0]),
+        self.var_EnrollNo.set(data[1]),
+        self.var_Name.set(data[2]),
         self.var_Sem.set(data[3]),
-        self.va_std_id.set(data[4]),
-        self.var_EnrollNo.set(data[5]),
-        self.var_Name.set(data[6]),
+        self.var_Dep.set(data[4]),
+        self.var_BatchYear.set(data[5]),
+        self.var_Year.set(data[6]),
         self.var_Div.set(data[7]),
         self.var_Gender.set(data[8]),
         self.var_DOB.set(data[9])
@@ -434,17 +475,15 @@ class Student :
                 if Update>0:
                     conn=mysql.connector.connect(host="localhost", username="root", password="gautam", database="face_recognizer_1")
                     my_cursor = conn.cursor()
-                    my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Student_Id=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
+                    my_cursor.execute("update student set Student_Id=%s, Enroll_No=%s, Student_Name=%s, Semester=%s, Dep=%s, BatchYear=%s, Year=%s,  Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
 
-
-                                                                                                                                                                                                                         self.var_Dep.get(), 
-                                                                                                                                                                                                                         self.var_BatchYear.get(),
-                                                                                                                                                                                                                         self.var_Year.get(),
-                                                                                                                                                                                                                         
-                                                                                                                                                                                                                         self.var_Sem.get(),
                                                                                                                                                                                                                          self.va_std_id.get(),
                                                                                                                                                                                                                          self.var_EnrollNo.get(),
                                                                                                                                                                                                                          self.var_Name.get(),
+                                                                                                                                                                                                                         self.var_Sem.get(),
+                                                                                                                                                                                                                         self.var_Dep.get(), 
+                                                                                                                                                                                                                         self.var_BatchYear.get(),
+                                                                                                                                                                                                                         self.var_Year.get(),
                                                                                                                                                                                                                          self.var_Div.get(),
                                                                                                                                                                                                                          self.var_Gender.get(),
                                                                                                                                                                                                                          self.var_DOB.get(),
@@ -500,13 +539,13 @@ class Student :
 
     #======Reset Function======
     def reset_data(self):
-        self.var_Dep.set("Select Department")
-        self.var_BatchYear.set("Select Batch-Year")
-        self.var_Year.set("Select Year")
-        self.var_Sem.set("Select Semester")
         self.va_std_id.set("")
         self.var_EnrollNo.set("")
         self.var_Name.set("")
+        self.var_Sem.set("Select Semester")
+        self.var_Dep.set("Select Department")
+        self.var_BatchYear.set("Select Batch-Year")
+        self.var_Year.set("Select Year")
         self.var_Div.set("Select Division")
         self.var_Gender.set("Select Gender")
         self.var_DOB.set("")
@@ -531,17 +570,18 @@ class Student :
                 id=0
                 for x in myresult:
                     id+=1
-                my_cursor.execute("update student set Dep=%s, BatchYear=%s, Year=%s, Semester=%s, Student_Id=%s, Enroll_No=%s, Student_Name=%s, Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
+                my_cursor.execute("update student set Student_Id=%s, Enroll_No=%s, Student_Name=%s, Semester=%s, Dep=%s, BatchYear=%s, Year=%s,   Division=%s, Gender=%s, DOB=%s, Email=%s, Phone_No=%s, Address=%s, PhotoSample=%s where Student_Id=%s",(
 
 
+                                                                                                                                                                                                                         self.va_std_id.get(),
+                                                                                                                                                                                                                         self.var_EnrollNo.get(),
+                                                                                                                                                                                                                         self.var_Name.get(),
+                                                                                                                                                                                                                         self.var_Sem.get(),
                                                                                                                                                                                                                          self.var_Dep.get(), 
                                                                                                                                                                                                                          self.var_BatchYear.get(),
                                                                                                                                                                                                                          self.var_Year.get(),
                                                                                                                                                                                                                          
-                                                                                                                                                                                                                         self.var_Sem.get(),
-                                                                                                                                                                                                                         self.va_std_id.get(),
-                                                                                                                                                                                                                         self.var_EnrollNo.get(),
-                                                                                                                                                                                                                         self.var_Name.get(),
+                                                                                                                                                                                                                         
                                                                                                                                                                                                                          self.var_Div.get(),
                                                                                                                                                                                                                          self.var_Gender.get(),
                                                                                                                                                                                                                          self.var_DOB.get(),
