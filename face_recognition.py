@@ -9,6 +9,7 @@ import mysql.connector
 from time import strftime
 from datetime import datetime
 from setuptools import Command
+import csv
 import cv2
 #import tensorflow as tf
 from train import Train
@@ -46,29 +47,67 @@ class Face_Recognition:
 
 
         #Title Of Project
-        title_lable1 = Label(bg_img, text = "Face Detector", font = ("cursive", 28, "italic"),bg ='#011f4b', fg = '#f8ae97') #We can give bg also.
+        title_lable1 = Label(bg_img, text = "Face Detector", font = ("comicsansns", 28, "italic"),bg ='#011f4b', fg = '#f8ae97') #We can give bg also.
         title_lable1.place(x=0, y=0, width = 1360, height = 45)
 
 
         #Face Detector Data Button
-        b1_1 = Button(self.root, text="Face Recogniton", command=self.face_recog, cursor="hand2", font = ("cursive", 18, "italic"),bg ='#011f4b', fg = '#f8ae97')
+        b1_1 = Button(self.root, text="Face Recogniton", command=self.face_recog, cursor="hand2", font = ("comicsansns", 18, "italic"),bg ='#011f4b', fg = '#f8ae97', activebackground = '#011f4b', activeforeground = '#f8ae97')
         b1_1.place(x=10, y= 160, width = 200, height=50)
 
     #===========Attendance CSV File================
+    
     def mark_attendance(self, i, e, n, d):
-        with open("Attendance.csv", "r+", newline="\n") as f:
-            myDatalist = f.readlines()
-            name_list = []
-            for line in myDatalist:
-                entry = line.split((","))
-                name_list.append(entry[0])
-            if((i not in name_list) and (n not in name_list) and (e not in name_list) and (d not in name_list)):
-                now=datetime.now()
-                d1 = now.strftime("%d/%m/%Y")
-                dtString = now.strftime("%H:%M:%S")
-                f.writelines(f"\n{i}, {e}, {n}, {d}, {dtString}, {d1}, Present")
-                
+        filename = datetime.now().strftime("%d-%m-%Y") + "_Attendance.csv"
+        file_exists = os.path.isfile(filename)
+        
+        # Keep track of the last ID added to the file
+        last_id = None
+        
+        with open(filename, "a", newline="\n") as f:
+            fieldnames = ['ID', 'Enroll_No', 'Name', 'Department', 'Time', 'Date', 'Status']
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
             
+            # Write header row if the file doesn't exist yet
+            if not file_exists:
+                writer.writeheader()
+
+            # Check if the entry already exists in the file
+            entries = []
+            with open(filename, "r", newline="\n") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    entries.append(row)
+
+            exists = False
+            for entry in entries:
+                if entry['ID'] == i:
+                    exists = True
+                    break
+
+            # Write new entry if it doesn't exist yet
+            if not exists:
+                now = datetime.now()
+                dt_string = now.strftime("%H:%M:%S")
+                d1 = now.strftime("%d/%m/%Y")
+                
+                # Add an empty row if the new ID is not consecutive to the last one
+                if last_id is not None and int(i) != last_id + 1:
+                    writer.writerow({})
+                
+                writer.writerow({
+                    'ID': i,
+                    'Enroll_No': e,
+                    'Name': n,
+                    'Department': d,
+                    'Time': dt_string,
+                    'Date': d1,
+                    'Status': 'Present'
+                })
+                
+                last_id = int(i)
+
+         
 
     #==========Face Recognition Function=========
     def face_recog(self):
