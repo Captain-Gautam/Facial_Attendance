@@ -217,73 +217,69 @@ class Face_Recognition_System :
     
     #===========Attendance CSV File================
     
+    
     def mark_attendance(self, i, e, n, d):
-        
-        folder_name = "Attendance"
-        filename = os.path.join(folder_name, datetime.now().strftime("%d-%m-%Y") + "_Attendance.csv")
-       
+        # create Attendance directory if it doesn't exist
+        if not os.path.isdir("Attendance"):
+            os.mkdir("Attendance")
+
+        # create or open attendance csv file for today's date
+        filename = os.path.join("Attendance", datetime.now().strftime("%d-%m-%Y") + "_Attendance.csv")
         file_exists = os.path.isfile(filename)
-        with open(filename, "a", newline="\n") as f:
-            fieldnames = ['ID', 'Enroll_No', 'Name', 'Department', 'Time', 'Date', 'Status']
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            
-            # Write header row if the file doesn't exist yet
-            if not file_exists:
+
+        if not file_exists:
+            # connect to MySQL database
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gautam",
+                database="face_recognizer_1"
+            )
+            cursor = mydb.cursor()
+
+            # retrieve student details from database
+            cursor.execute("SELECT Student_Id, Enroll_No, Student_Name, Dep FROM student")
+            student_data = cursor.fetchall()
+
+            # create attendance file and write header
+            with open(filename, mode='w', newline='') as f:
+                fieldnames = ['ID', 'Enroll_No', 'Name', 'Department', 'Time', 'Date', 'Status']
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
                 writer.writeheader()
 
-            # Check if the entry already exists in the file
-            entries = []
-            with open(filename, "r", newline="\n") as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    entries.append(row)
+                # write student details to csv file with status "Absent"
+                for student in student_data:
+                    writer.writerow({
+                        'ID': student[0],
+                        'Enroll_No': student[1],
+                        'Name': student[2],
+                        'Department': student[3],
+                        'Time': '',
+                        'Date': '',
+                        'Status': 'Absent'
+                    })
 
-            exists = False
-            for entry in entries:
-                if entry['ID'] == i:
-                    exists = True
-                    break
-
-            # Write new entry if it doesn't exist yet
-            if not exists:
+        # open attendance file in append mode and update status if ID is recognized
+        with open(filename, "r", newline="\n") as f:
+            reader = csv.DictReader(f)
+            entries = [row for row in reader]
+            
+        for entry in entries:
+            if entry['ID'] == i:
+                entry['Status'] = 'Present'
                 now = datetime.now()
                 dt_string = now.strftime("%H:%M:%S")
                 d1 = now.strftime("%d/%m/%Y")
-                writer.writerow({
-                    'ID': i,
-                    'Enroll_No': e,
-                    'Name': n,
-                    'Department': d,
-                    'Time': dt_string,
-                    'Date': d1,
-                    'Status': 'Present'
-                })
+                entry['Time'] = dt_string
+                entry['Date'] = d1
 
-    # def mark_attendance(self, i, e, n, d):
-    #     if not os.path.exists('Attendance'):
-    #         os.makedirs('Attendance')
-    #     os.chdir('Attendance')
-        
-    #     filename = datetime.now().strftime("%d-%m-%Y") + "_Attendance.csv"
-    #     file_exists = os.path.isfile(filename)
-    #     with open(filename, "a", newline="\n") as f:
-    #         fieldnames = ['ID', 'Enroll_No', 'Name', 'Department', 'Time', 'Date', 'Status']
-    #         writer = csv.DictWriter(f, fieldnames=fieldnames)
-    #         # Write header row if file doesn't exist
-    #         if not file_exists:
-    #             writer.writeheader()
-            
-    #         # Write data to file
-    #         writer.writerow({
-    #             'ID': i,
-    #             'Enroll_No': e,
-    #             'Name': n,
-    #             'Department': d,
-    #             'Time': datetime.now().strftime("%H:%M:%S"),
-    #             'Date': datetime.now().strftime("%d/%m/%Y"),
-    #             'Status': 'Present'
-    #         })
-         
+        # write updated attendance to file
+        with open(filename, mode='w', newline="\n") as f:
+            fieldnames = ['ID', 'Enroll_No', 'Name', 'Department', 'Time', 'Date', 'Status']
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(entries)
+
 
     #==========Face Recognition Function=========
     def face_recog(self):
