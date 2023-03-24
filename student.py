@@ -27,6 +27,7 @@ class Student :
         self.root = root
         self.root.geometry("1360x688+0+0")
         self.root.title("Face Recognition System")
+        #self.root.wm_iconbitmap("face.ico")
 
 
         
