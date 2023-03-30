@@ -4,10 +4,10 @@ Facial Attendance Recognition System is a software application that uses facial 
 I have designed this software for particular my college.
 
 # Technologies Used
-Python
-OpenCV
-Dlib
-MySql
+Python</br>
+OpenCV</br>
+Dlib</br>
+MySql</br>
 
 # Looks Of Software
 1.Main Page of Application:
@@ -32,20 +32,20 @@ MySql
 
 # Process
 1.) Open the main window of the software.</br>
-2.)Enter the Student Detail in Student Detail Page and then first Save it, and then take the Photo sample.
-3.)Now Return to the main window and then press the Train Button, to train the images.
-4.)Now, you can open Face Detector Button to Recognize the face, And after the Face is recognized, in backend the csv file will be generated and saved in Attendance directory, by daily date name.
-5.)Open the Attendance window, then import csv file from Attendance directory to view the Attendance of the indiviuals.
+2.)Enter the Student Detail in Student Detail Page and then first Save it, and then take the Photo sample.</br>
+3.)Now Return to the main window and then press the Train Button, to train the images.</br>
+4.)Now, you can open Face Detector Button to Recognize the face, And after the Face is recognized, in backend the csv file will be generated and saved in Attendance directory, by daily date name.</br>
+5.)Open the Attendance window, then import csv file from Attendance directory to view the Attendance of the indiviuals.</br>
 6.)For Exit from the Software Press Exit Button.
 
 
 
 # Contributing
-We welcome contributions from the community. To contribute, please fork this repository, make your changes, and submit a pull request.
+I welcome contributions from the community. To contribute, please fork this repository, make your changes, and submit a pull request.
 
 # License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 # Contact
-If you have any questions or comments about this project, please feel free to contact us at [gautamprajapati2252@gmail.com]. We appreciate your interest in our Facial Attendance Recognition System.
+If you have any questions or comments about this project, please feel free to contact us at [gautamprajapati2252@gmail.com]. I appreciate your interest in our Facial Attendance Recognition System.
 
