@@ -32,7 +32,7 @@ MySql
 
 # Process
 1.) Open the main window of the software.
-2.)Enter the Student Detail in Student Detail Page and then first Save it, and then take the Photo sample.
+\n2.)Enter the Student Detail in Student Detail Page and then first Save it, and then take the Photo sample.
 3.)Now Return to the main window and then press the Train Button, to train the images.
 4.)Now, you can open Face Detector Button to Recognize the face, And after the Face is recognized, in backend the csv file will be generated and saved in Attendance directory, by daily date name.
 5.)Open the Attendance window, then import csv file from Attendance directory to view the Attendance of the indiviuals.
